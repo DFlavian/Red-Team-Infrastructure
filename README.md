@@ -1,5 +1,6 @@
 # Red-Team-Infrastructure
 A testing Red Team Infrastructure created with Docker.
+You can deploy this Infrastructure on any PC and start to pwn everything you want!
 
 # Structure
 ![Deployment Diagram](RedTeam_Infra.png)

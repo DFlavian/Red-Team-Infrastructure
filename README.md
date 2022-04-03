@@ -29,8 +29,8 @@ To connect to the Empire server you have 2 options:
     docker exec -it {container-id} ./ps-empire client
 ### Exposing the Empire server ports (Not suggested)
 You can expose the Empire server ports by modifying the docker-compose file:
-empire:
 
+    empire:
     image: bcsecurity/empire:latest
     volumes:
     - empire-data:/opt/empire/

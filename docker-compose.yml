@@ -1,0 +1,74 @@
+version: "3"
+services:
+  metasploit:
+    image: metasploitframework/metasploit-framework:latest
+    environment:
+      - DATABASE_URL=postgres://codimd:change_password@database/codimd
+    volumes:
+      - msf-data:/home/msf/.msf4
+    restart: on-failure
+    stdin_open: true
+    tty: true
+    
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "443:443"
+
+  pwndrop:
+    image: lscr.io/linuxserver/pwndrop
+    container_name: pwndrop
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - SECRET_PATH=/redteaminfra-pwndrop #optional
+    volumes:
+      - ./files:/config
+    ports:
+      - "127.0.0.1:8080:8080"
+    restart: on-failure
+
+  empire:
+    image: bcsecurity/empire:latest
+    volumes:
+      - empire-data:/opt/empire/
+    ports:
+      - "127.0.0.1:1337:1337"
+      - "127.0.0.1:5000:5000"
+    stdin_open: true
+    tty: true
+    restart: on-failure
+    
+  database:
+    image: postgres:11.6-alpine
+    environment:
+      - POSTGRES_USER=codimd
+      - POSTGRES_PASSWORD=change_password
+      - POSTGRES_DB=codimd
+    volumes:
+      - "database-data:/var/lib/postgresql/data"
+    restart: on-failure
+
+  codimd:
+    image: hackmdio/hackmd:latest
+    environment:
+      - CMD_DB_URL=postgres://codimd:change_password@database/codimd
+      - CMD_USECDN=false
+    depends_on:
+      - database
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - upload-data:/home/hackmd/app/public/uploads
+    restart: on-failure
+    
+    
+volumes:
+  database-data: {}
+  upload-data: {}
+  empire-data: {}
+  msf-data: {}

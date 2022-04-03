@@ -2,7 +2,7 @@
 A testing Red Team Infrastructure created with Docker.
 
 # Structure
-
+![enter image description here](RedTeam_Infra.png)
 The Infrastructure Comprehends the following services:
 - NGINX: It's the only service exposed and it's used as proxy for the different internal services
 - Empire: 

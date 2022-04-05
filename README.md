@@ -54,3 +54,6 @@ You can access CodiMD from the following link:
 or
 
     <YOUR-IP>/redteaminfra-pwndrop
+    
+# Support
+For any question you can join the INE/eLearnSecurity Discord server (https://discord.gg/n9rySGQgPa) or contact me on discord: Z3r0n37#3285! :D
